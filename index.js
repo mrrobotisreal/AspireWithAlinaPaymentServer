@@ -3,6 +3,7 @@ const https = require("https");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const Stripe = require("stripe");
+require("dotenv").config();
 
 const options = {
   cert: fs.readFileSync("/etc/letsencrypt/live/aspirewithalina.com/fullchain.pem"),
