@@ -51,6 +51,11 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+app.get("/test-payment-intent", async (req, res) => {
+  console.log("Testing payment intent...");
+  res.json({ clientSecret: "test_secret" });
+});
+
 https.createServer(options, app).listen(PORT, () => {
   console.log(`Server is running securely on https://aspirewithalina.com:${PORT}`);
 });
