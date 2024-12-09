@@ -11,7 +11,6 @@ const options = {
 };
 const app = express();
 const PORT = 7777;
-console.log("STRIPE_SECRET_KEY:", process.env.STRIPE_SECRET_KEY.slice(0, 10));
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
