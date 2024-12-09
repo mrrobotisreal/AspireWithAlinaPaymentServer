@@ -15,10 +15,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 const lessonPackages = [
-  { id: "1_lesson", name: "1 Lesson", price: 2 }, // $40 per lesson, changed for testing
-  { id: "3_lessons", name: "3 Lessons", price: 114 }, // $38 per lesson
-  { id: "6_lessons", name: "6 Lessons", price: 210 }, // $35 per lesson
-  { id: "12_lessons", name: "12 Lessons", price: 360 }, // $30 per lesson
+  { id: "1_lesson", name: "1 Lesson", price: 2 }, // $40 per lesson, $40 total, changed for testing
+  { id: "3_lessons", name: "3 Lessons", price: 2 }, // $38 per lesson, $114 total
+  { id: "6_lessons", name: "6 Lessons", price: 2 }, // $35 per lesson, $210 total
+  { id: "12_lessons", name: "12 Lessons", price: 2 }, // $30 per lesson, $360 total
 ];
 
 app.use(bodyParser.json());
