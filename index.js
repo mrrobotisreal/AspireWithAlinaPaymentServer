@@ -11,11 +11,12 @@ const options = {
 };
 const app = express();
 const PORT = 7777;
+console.log("STRIPE_SECRET_KEY:", process.env.STRIPE_SECRET_KEY.slice(0, 10));
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 const lessonPackages = [
-  { id: "1_lesson", name: "1 Lesson", price: 40 }, // $40 per lesson
+  { id: "1_lesson", name: "1 Lesson", price: 2 }, // $40 per lesson, changed for testing
   { id: "3_lessons", name: "3 Lessons", price: 114 }, // $38 per lesson
   { id: "6_lessons", name: "6 Lessons", price: 210 }, // $35 per lesson
   { id: "12_lessons", name: "12 Lessons", price: 360 }, // $30 per lesson
