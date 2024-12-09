@@ -24,20 +24,25 @@ const lessonPackages = [
 app.use(bodyParser.json());
 
 app.post("/create-payment-intent", async (req, res) => {
+  console.log("Request body: ", JSON.stringify(req.body, null, 2));
   const { packageId } = req.body;
 
   const selectedPackage = lessonPackages.find((pkg) => pkg.id === packageId);
+  console.log("Selected package: ", selectedPackage);
   if (!selectedPackage) {
+    console.error("Invalid package ID");
     res.status(400).send("Invalid package ID");
     return;
   }
 
   try {
+    console.log("Creating payment intent...");
     const paymentIntent = await stripe.paymentIntents.create({
       amount: selectedPackage.price * 100,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
     });
+    console.log("Payment intent created: ", paymentIntent);
 
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
