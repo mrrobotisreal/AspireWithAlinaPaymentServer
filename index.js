@@ -15,45 +15,35 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 const lessonPackages = [
-  { id: "1_lesson", name: "1 Lesson", price: 2 }, // $40 per lesson, $40 total, changed for testing
-  { id: "3_lessons", name: "3 Lessons", price: 2 }, // $38 per lesson, $114 total
-  { id: "6_lessons", name: "6 Lessons", price: 2 }, // $35 per lesson, $210 total
-  { id: "12_lessons", name: "12 Lessons", price: 2 }, // $30 per lesson, $360 total
+  { id: "1_lesson", name: "1 Lesson", price: 40 }, // $40 per lesson, $40 total
+  { id: "3_lessons", name: "3 Lessons", price: 114 }, // $38 per lesson, $114 total
+  { id: "6_lessons", name: "6 Lessons", price: 210 }, // $35 per lesson, $210 total
+  { id: "12_lessons", name: "12 Lessons", price: 360 }, // $30 per lesson, $360 total
 ];
 
 app.use(bodyParser.json());
 
 app.post("/create-payment-intent", async (req, res) => {
-  console.log("Request body: ", JSON.stringify(req.body, null, 2));
   const { packageId } = req.body;
 
   const selectedPackage = lessonPackages.find((pkg) => pkg.id === packageId);
-  console.log("Selected package: ", selectedPackage);
   if (!selectedPackage) {
-    console.error("Invalid package ID");
     res.status(400).send("Invalid package ID");
     return;
   }
 
   try {
-    console.log("Creating payment intent...");
     const paymentIntent = await stripe.paymentIntents.create({
       amount: selectedPackage.price * 100,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
     });
-    console.log("Payment intent created: ", paymentIntent);
 
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error(`Payment intent creation failed: ${error.message}`);
     res.status(500).send("An error occurred while creating the payment intent");
   }
-});
-
-app.get("/test-payment-intent", async (req, res) => {
-  console.log("Testing payment intent...");
-  res.json({ clientSecret: "test_secret" });
 });
 
 https.createServer(options, app).listen(PORT, () => {
